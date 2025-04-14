@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const Database = require('better-sqlite3'); // Import better-sqlite3
+const Database = require('better-sqlite3'); 
 require('dotenv').config();
 
 const app = express();
@@ -18,7 +18,8 @@ app.get('/categories', (req, res) => {
     try {
         const rows = db.prepare('SELECT * FROM category').all();
         res.json(rows);
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
@@ -28,7 +29,8 @@ app.get('/subcategories', (req, res) => {
     try {
         const rows = db.prepare('SELECT * FROM sub_category').all();
         res.json(rows);
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
@@ -38,7 +40,8 @@ app.get('/duas', (req, res) => {
     try {
         const rows = db.prepare('SELECT * FROM dua').all();
         res.json(rows);
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
@@ -50,7 +53,8 @@ app.get('/categories/:cat_id', (req, res) => {
         const row = db.prepare('SELECT * FROM category WHERE cat_id = ?').get(cat_id);
         if (row) {
             res.json(row);
-        } else {
+        } 
+        else {
             res.status(404).json({ message: 'Category not found' });
         }
     } catch (err) {
@@ -64,7 +68,8 @@ app.get('/subcategories/:cat_id', (req, res) => {
     try {
         const rows = db.prepare('SELECT * FROM sub_category WHERE cat_id = ?').all(cat_id);
         res.json(rows);
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
@@ -76,10 +81,12 @@ app.get('/subcategories/:cat_id/:subcat_id', (req, res) => {
         const row = db.prepare('SELECT * FROM sub_category WHERE cat_id = ? AND id = ?').get(cat_id, subcat_id);
         if (row) {
             res.json(row);
-        } else {
+        } 
+        else {
             res.status(404).json({ message: 'Subcategory not found' });
         }
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
@@ -91,10 +98,12 @@ app.get('/duas/:subcat_id', (req, res) => {
         const rows = db.prepare('SELECT * from dua WHERE subcat_id = ?').all(subcat_id);
         if (rows.length > 0) {
             res.json(rows);
-        } else {
+        } 
+        else {
             res.status(404).json({ message: "No dua found" });
         }
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
@@ -106,7 +115,8 @@ app.get('/duas/:subcat_id/:dua_id', (req, res) => {
         const row = db.prepare('SELECT * from dua WHERE subcat_id = ? and dua_id = ?').get(subcat_id, dua_id);
         if (row) {
             res.json(row);
-        } else {
+        } 
+        else {
             res.status(404).json({ message: "Dua not found" });
         }
     } catch (err) {
@@ -114,7 +124,7 @@ app.get('/duas/:subcat_id/:dua_id', (req, res) => {
     }
 });
 
-// Default route
+// Default 
 app.get('/', (req, res) => {
     res.send('Server is running');
 });
