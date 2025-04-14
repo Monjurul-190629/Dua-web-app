@@ -155,6 +155,7 @@ app.get('/duas/:subcat_id/:dua_id', (req, res) => {
     })
 })
 
+/* Everything is good at localhost , now I want to deploy in vercel */
 
 
 /// default
