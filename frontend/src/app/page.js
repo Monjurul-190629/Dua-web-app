@@ -1,6 +1,13 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import getCategory from './lib/getCategory';
 
-export default function Home() {
+export default async function Home() {
+
+  const categories = await getCategory();
+
+  console.log(categories)
+
+
   return (
     <div className="flex justify-center mt-20 ">
       <div className="">
@@ -15,6 +22,15 @@ export default function Home() {
             className="w-full pl-10 pr-4 py-3 border border-[#bdc5c1] rounded-[8px] outline-none focus:ring-2 placeholder:pl-1"
           />
         </div>
+
+        {/* categories */}
+
+        
+
+
+
+
+
       </div>
       <div></div>
     </div>
