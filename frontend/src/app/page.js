@@ -1,5 +1,8 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import getCategory from './lib/getCategory';
+import Image from 'next/image'
+import img from '../../public/category_icon.png';
+
 
 export default async function Home() {
 
@@ -25,7 +28,37 @@ export default async function Home() {
 
         {/* categories */}
 
-        
+        <ul>
+          {
+            categories.map(category => (
+              <li key={category.id}>
+                <div className='flex gap-5 justify-between'>
+
+                  <div className='flex gap-6 mb-10'>
+                    <div>
+                      <Image
+                        className="w-10 h-10"
+                        src={img}
+                        alt="Category icon"
+
+                      />
+
+                    </div>
+                    <div>
+                      <p className=' text-[#1FA45B] font-semibold'>{category.cat_name_en}</p>
+                      <p className='font-semibold text-[#7E7E7E]'> Subcategory: {category.no_of_subcat} </p>
+                    </div>
+
+                  </div>
+                  <div>
+                    <p className='font-semibold'> {category.no_of_dua} </p>
+                    <p className='font-semibold text-[#7E7E7E]'>Duas</p>
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
 
 
 
