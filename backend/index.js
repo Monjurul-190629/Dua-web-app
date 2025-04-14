@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const sqlite3 = require('sqlite3').verbose();
+const Database = require('better-sqlite3');
 require('dotenv').config();
 
 
@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(cors());
 
 
+/*
+
 // Connect to SQLite database
 const db = new sqlite3.Database('./dua_main.sqlite', (err) => {
     if (err) {
@@ -23,6 +25,11 @@ const db = new sqlite3.Database('./dua_main.sqlite', (err) => {
         console.log('Connected to the SQLite database.');
     }
 });
+
+
+*/
+
+const db = new Database('./dua_main.sqlite', { verbose: console.log });
 
 
 // API Endpoint: Fetch all categories
