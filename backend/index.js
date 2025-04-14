@@ -48,10 +48,42 @@ app.get('/subcategories', (req, res) => {
 });
 
 
+
 /// Now for dua
 
 app.get('/duas', (req, res) => {
     db.all('SELECT * FROM dua', [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(rows);
+        }
+    });
+});
+
+
+// Now for specific category with cat_id
+
+app.get('/categories/:cat_id', (req, res) => {
+    const { cat_id } = req.params; 
+
+    db.get('SELECT * FROM category WHERE cat_id = ?', [cat_id], (err, row) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else if (row) {
+            res.json(row); // Send the category details as a response
+        } else {
+            res.status(404).json({ message: 'Category not found' }); // If no category matches the cat_id
+        }
+    });
+});
+
+
+// Get subcategories by cat_id
+app.get('/subcategories/:cat_id', (req, res) => {
+    const { cat_id } = req.params;
+
+    db.all('SELECT * FROM sub_category WHERE cat_id = ?', [cat_id], (err, rows) => {
         if (err) {
             res.status(500).json({ error: err.message });
         } else {
