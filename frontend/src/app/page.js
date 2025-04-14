@@ -34,7 +34,7 @@ export default async function Home() {
               <li key={category.id}>
                 <div className='flex gap-5 justify-between'>
 
-                  <div className='flex gap-6 mb-10'>
+                  <div className='flex gap-6 mb-8'>
                     <div>
                       <Image
                         className="w-10 h-10"
