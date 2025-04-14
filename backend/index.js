@@ -24,6 +24,41 @@ const db = new sqlite3.Database('./dua_main.sqlite', (err) => {
 });
 
 
+// API Endpoint: Fetch all categories
+app.get('/categories', (req, res) => {
+    db.all('SELECT * FROM category', [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(rows);
+        }
+    });
+});
+
+// Now for subcategory
+
+app.get('/subcategories', (req, res) => {
+    db.all('SELECT * FROM sub_category', [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(rows);
+        }
+    });
+});
+
+
+/// Now for dua
+
+app.get('/duas', (req, res) => {
+    db.all('SELECT * FROM dua', [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(rows);
+        }
+    });
+});
 
 
 
