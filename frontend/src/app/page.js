@@ -64,7 +64,7 @@ export default function Home() {
     const duas = await getDuaCard(id);
     setDuas(duas);
     setDuaId(id);
-  }   
+  }
 
   // for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -159,9 +159,13 @@ export default function Home() {
         {/* Dua Cards */}
 
         <div className='flex justify-center'>
-          <div className='font-semibold mb-4 flex justify-center text-[22px] max-w-xl'>
-            <span className='text-[#1FA45B] pr-2 '>Section: </span> {subcatName}
-          </div>
+          {duas.length > 0 && (
+            <div className='flex justify-center'>
+              <div className='font-semibold mb-4 flex justify-center md:text-[22px] max-w-xl'>
+                <span className='text-[#1FA45B] pr-2'>Section:</span> {subcatName}
+              </div>
+            </div>
+          )}
         </div>
 
         <ul>
