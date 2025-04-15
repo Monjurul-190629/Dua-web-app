@@ -64,8 +64,23 @@ export default function Home() {
     const duas = await getDuaCard(id);
     setDuas(duas);
     setDuaId(id);
-  }
+  }   
 
+  // for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
+  // Get current page items
+  const currentDuas = duas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  // Generate page numbers
+  const totalPages = Math.ceil(duas.length / itemsPerPage);
+  const pageNumbers = [...Array(totalPages)].map((_, index) => index + 1);
+
+  // Pagination handler
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
 
   return (
@@ -152,11 +167,25 @@ export default function Home() {
         <ul>
 
           {
-            duas.map((d, index) => (
-              <DuaCard key={index} dua={d} index={index + 1} ></DuaCard>
+            currentDuas.map((d, index) => (
+              <DuaCard key={index} dua={d} index={(currentPage - 1) * itemsPerPage + index + 1} ></DuaCard>
             ))
           }
         </ul>
+
+        <div className="flex justify-center mt-4">
+          <div className="flex gap-2">
+            {pageNumbers.map((number) => (
+              <button
+                key={number}
+                className={`px-4 py-2 ${currentPage === number ? 'bg-green-500' : 'bg-gray-500'} text-white rounded`}
+                onClick={() => handlePageClick(number)}
+              >
+                {number}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

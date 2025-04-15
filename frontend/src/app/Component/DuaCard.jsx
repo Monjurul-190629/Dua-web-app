@@ -22,7 +22,7 @@ const DuaCard = ({ dua, index }) => {
     };
 
     return (
-        <div className="max-w-xl w-full bg-white shadow-md rounded-2xl p-6 mx-auto my-8 transition-all duration-300 hover:shadow-lg">
+        <div className="max-w-xl w-full bg-white shadow-md rounded-2xl p-2 mx-auto my-3 transition-all duration-300 hover:shadow-lg">
             {/* Header */}
             <div className="font-semibold mb-4 flex gap-4 items-center">
                 <Image className="w-12 h-12 object-cover rounded-full" src={img} alt="mosque.img" />
