@@ -9,6 +9,7 @@ import img from '../../public/category_icon.png';
 import getDuaCard from './lib/getDuaCard';
 import DuaCard from './Component/DuaCard';
 
+
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
@@ -21,6 +22,10 @@ export default function Home() {
 
   const [duaId, setDuaId] = useState(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
+  /// subcat_name
+
+  const [subcatName, setSubcatName] = useState('');
 
   // Fetch categories when component mounts
   useEffect(() => {
@@ -48,19 +53,24 @@ export default function Home() {
 
   // Handle Dua Cards
 
-  const handleDuaCards = async (id) => {
+  const handleDuaCards = async (id, name) => {
     // collapse if same id clicked again
     if (duaId == id) {
       return;
     }
+
+    setSubcatName(name);
+
     const duas = await getDuaCard(id);
     setDuas(duas);
     setDuaId(id);
   }
 
+
+
   return (
     <div className="flex justify-center  gap-14 mt-20">
-      <div className="w-[350px]"> 
+      <div className="w-[350px]">
         <div className="bg-[#1FA45B] text-white text-center py-4 px-6 font-semibold rounded-t-[10px]">
           Categories
         </div>
@@ -111,8 +121,9 @@ export default function Home() {
                           className="py-3 text-[16px] font-semibold text-[#373737] break-words"
                         >
                           <div className={`inline cursor-pointer transition-colors duration-200 ${duaId === subcategory.subcat_id ? 'text-[#1FA45B]' : 'text-black'
-                            }`} onClick={() => handleDuaCards(subcategory.subcat_id)}>
+                            }`} onClick={() => handleDuaCards(subcategory.subcat_id, subcategory.subcat_name_en)}>
                             {subcategory.subcat_name_en}
+
                           </div>
 
                         </li>
@@ -130,10 +141,15 @@ export default function Home() {
       <div>
         {/* Dua Cards */}
 
+        <div className='font-semibold mb-4'>
+          <span className='text-[#1FA45B] pr-2'>Section: </span> {subcatName}
+        </div>
+
         <ul>
+
           {
-            duas.map(d => (
-              <DuaCard key = {d.id} dua = {d}></DuaCard>
+            duas.map((d, index) => (
+              <DuaCard key={index} dua={d} ></DuaCard>
             ))
           }
         </ul>
