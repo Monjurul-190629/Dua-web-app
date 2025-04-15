@@ -86,7 +86,7 @@ export default function Home() {
 
   return (
     <div>
-      <div className='md:px-44 md:pt-12 pt-10'>
+      <div className='md:px-2 md:pt-5 pt-5'>
         <SectionHeader />
       </div>
       <div className="flex flex-col lg:flex-row justify-center  gap-14 mt-4">
