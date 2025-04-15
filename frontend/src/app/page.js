@@ -139,7 +139,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right Sidebar */}
+        
         <div>
           {/* Dua Cards */}
           <div className='flex justify-center'>

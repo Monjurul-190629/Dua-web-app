@@ -1,4 +1,3 @@
-// app/Component/ResponsiveLayout.jsx
 'use client';
 
 import { useState } from 'react';
@@ -25,7 +24,7 @@ const ResponsiveLayout = ({ children }) => {
       </div>
 
       {/* Left Sidebar */}
-      <div className={`fixed top-0 left-0 z-40 h-full bg-white w-[250px] shadow-lg transition-transform duration-300 md:relative md:translate-x-0 md:w-[100px] ${leftOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`fixed top-0 left-0 z-40 h-full bg-white w-[250px] shadow-lg transition-transform duration-300 md:relative md:translate-x-0 lg:w-[100px] ${leftOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <LeftSideBar />
       </div>
 
