@@ -1,9 +1,14 @@
 import React from 'react';
 
-const DuaCard = () => {
+const DuaCard = ({dua}) => {
+    
+    const {dua_name_en} = dua;
+
+
+
     return (
         <div>
-            
+            {dua_name_en}
         </div>
     );
 };

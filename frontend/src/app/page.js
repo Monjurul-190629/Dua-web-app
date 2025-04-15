@@ -7,6 +7,7 @@ import getSubcateByCate from './lib/getSubcateByCate';
 import Image from 'next/image';
 import img from '../../public/category_icon.png';
 import getDuaCard from './lib/getDuaCard';
+import DuaCard from './Component/DuaCard';
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -59,7 +60,7 @@ export default function Home() {
 
   return (
     <div className="flex justify-center  gap-14 mt-20">
-      <div className="w-[350px]"> {/* Set a fixed width for the container */}
+      <div className="w-[350px]"> 
         <div className="bg-[#1FA45B] text-white text-center py-4 px-6 font-semibold rounded-t-[10px]">
           Categories
         </div>
@@ -75,12 +76,12 @@ export default function Home() {
 
         <ul>
           {categories.map((category) => (
-            <li key={category.id}>
+            <li key={category.id} className='mb-4'>
               <div
-                className="flex gap-5 justify-between cursor-pointer"
+                className="flex gap-5 justify-between cursor-pointer items-center bg-slate-200 rounded-lg"
                 onClick={() => handleSubcategories(category.cat_id)}
               >
-                <div className="flex gap-6 mb-4">
+                <div className="flex gap-6 mb-4 items-center pt-3 pl-2">
                   <Image className="w-10 h-10" src={img} alt="Category icon" />
                   <div>
                     <p className="text-[#1FA45B] font-semibold">
@@ -91,7 +92,7 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-                <div>
+                <div className='pr-2'>
                   <p className="font-semibold text-center">{category.no_of_dua}</p>
                   <p className="font-semibold text-[#7E7E7E]">Duas</p>
                 </div>
@@ -103,13 +104,13 @@ export default function Home() {
                   {subcategories.length === 0 ? (
                     <p className="text-gray-500 italic">No subcategories found.</p>
                   ) : (
-                    <ul className="list-disc list-inside marker:text-green-600">
+                    <ul className="list-disc list-inside marker:text-green-700">
                       {subcategories.map((subcategory) => (
                         <li
                           key={subcategory.id}
                           className="py-3 text-[16px] font-semibold text-[#373737] break-words"
                         >
-                          <div className={`inline cursor-pointer transition-colors duration-200 ${duaId === subcategory.subcat_id ? 'text-green-500' : 'text-black'
+                          <div className={`inline cursor-pointer transition-colors duration-200 ${duaId === subcategory.subcat_id ? 'text-[#1FA45B]' : 'text-black'
                             }`} onClick={() => handleDuaCards(subcategory.subcat_id)}>
                             {subcategory.subcat_name_en}
                           </div>
@@ -132,9 +133,7 @@ export default function Home() {
         <ul>
           {
             duas.map(d => (
-              <li key={d.id}>
-                {d.dua_name_en}
-              </li>
+              <DuaCard key = {d.id} dua = {d}></DuaCard>
             ))
           }
         </ul>
