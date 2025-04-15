@@ -23,6 +23,7 @@ const DuaCard = ({ dua, index }) => {
 
     return (
         <div className="max-w-xl w-full bg-white shadow-md p-5 rounded-2xl p-2 mx-auto my-3 transition-all duration-300 hover:shadow-lg">
+
             {/* Header */}
             <div className="font-semibold mb-4 flex gap-4 items-center">
                 <Image className="w-12 h-12 object-cover rounded-full" src={img} alt="mosque.img" />
@@ -55,7 +56,7 @@ const DuaCard = ({ dua, index }) => {
                     )
                 }
 
-                {/* Action Icons */}
+                {/* Icons */}
                 <div className="flex gap-5 items-center text-slate-500">
                     <PiFrameCornersLight className="w-7 h-7 sm:w-6 sm:h-6" />
                     <FaRegBookmark className="w-6 h-6 sm:w-6 sm:h-6" />
