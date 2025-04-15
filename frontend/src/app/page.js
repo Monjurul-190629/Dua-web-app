@@ -35,6 +35,13 @@ export default function Home() {
     setSelectedCategoryId(id);
   };
 
+
+  // Handle Dua Cards
+
+  const handleDuaCards = async(id) => {
+
+  }
+
   return (
     <div className="flex justify-center mt-20">
       <div className="w-[350px]"> {/* Set a fixed width for the container */}
@@ -87,8 +94,11 @@ export default function Home() {
                           key={subcategory.id}
                           className="py-3 text-[16px] font-semibold text-[#373737] break-words"
                         >
-                          {subcategory.subcat_name_en}
+                          <div className='inline' onClick={() => handleDuaCards(subcategory.subcat_id)}>
+                            {subcategory.subcat_name_en}
+                          </div>
                         </li>
+                        
                       ))}
                     </ul>
                   )}
