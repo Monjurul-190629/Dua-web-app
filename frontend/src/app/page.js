@@ -6,10 +6,19 @@ import getCategory from './lib/getCategory';
 import getSubcateByCate from './lib/getSubcateByCate';
 import Image from 'next/image';
 import img from '../../public/category_icon.png';
+import getDuaCard from './lib/getDuaCard';
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
+
+
+  /// For duas
+  const [duas, setDuas] = useState([]);
+
+  // for visualization
+
+  const [duaId, setDuaId] = useState(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
   // Fetch categories when component mounts
@@ -38,12 +47,18 @@ export default function Home() {
 
   // Handle Dua Cards
 
-  const handleDuaCards = async(id) => {
-
+  const handleDuaCards = async (id) => {
+    // collapse if same id clicked again
+    if (duaId == id) {
+      return;
+    }
+    const duas = await getDuaCard(id);
+    setDuas(duas);
+    setDuaId(id);
   }
 
   return (
-    <div className="flex justify-center mt-20">
+    <div className="flex justify-center  gap-14 mt-20">
       <div className="w-[350px]"> {/* Set a fixed width for the container */}
         <div className="bg-[#1FA45B] text-white text-center py-4 px-6 font-semibold rounded-t-[10px]">
           Categories
@@ -77,7 +92,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <p className="font-semibold">{category.no_of_dua}</p>
+                  <p className="font-semibold text-center">{category.no_of_dua}</p>
                   <p className="font-semibold text-[#7E7E7E]">Duas</p>
                 </div>
               </div>
@@ -94,11 +109,13 @@ export default function Home() {
                           key={subcategory.id}
                           className="py-3 text-[16px] font-semibold text-[#373737] break-words"
                         >
-                          <div className='inline' onClick={() => handleDuaCards(subcategory.subcat_id)}>
+                          <div className={`inline cursor-pointer transition-colors duration-200 ${duaId === subcategory.subcat_id ? 'text-green-500' : 'text-black'
+                            }`} onClick={() => handleDuaCards(subcategory.subcat_id)}>
                             {subcategory.subcat_name_en}
                           </div>
+
                         </li>
-                        
+
                       ))}
                     </ul>
                   )}
@@ -106,6 +123,20 @@ export default function Home() {
               )}
             </li>
           ))}
+        </ul>
+      </div>
+
+      <div>
+        {/* Dua Cards */}
+
+        <ul>
+          {
+            duas.map(d => (
+              <li key={d.id}>
+                {d.dua_name_en}
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>
