@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import LeftSideBar from "./Component/LeftSideBar";
-import RightSideBar from "./Component/RightSideBar";
+import ResponsiveLayout from "./Component/ResponsiveLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,24 +21,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="flex min-h-screen w-full">
-          {/* Left Sidebar */}
-          <div className="w-[100px] hidden md:block">
-            <LeftSideBar />
-          </div>
-
-          {/* Main Content */}
-          <main className="flex-1 px-4 py-6">
-            {children}
-          </main>
-
-          {/* Right Sidebar */}
-          <div className="w-[200px] hidden lg:block">
-            <RightSideBar />
-          </div>
-        </div>
+        <ResponsiveLayout>
+          {children}
+        </ResponsiveLayout>
       </body>
     </html>
-
   );
 }
