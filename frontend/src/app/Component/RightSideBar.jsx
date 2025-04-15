@@ -7,7 +7,7 @@ import { IoToggleOutline } from "react-icons/io5";
 
 const RightSideBar = () => {
   return (
-    <div className="p-4 ml-10 md:p-6 bg-white rounded-lg shadow-lg">
+    <div className="p-4 md:p-6 bg-white rounded-lg shadow-lg">
       {/* User Icon */}
       <div className="flex justify-center my-8">
         <FaUserCircle className="text-gray-600 text-5xl" />

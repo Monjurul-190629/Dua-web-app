@@ -32,7 +32,7 @@ const ResponsiveLayout = ({ children }) => {
       <main className="flex-1 px-4 py-6 overflow-y-auto w-full">{children}</main>
 
       {/* Right Sidebar */}
-      <div className={`fixed top-0 right-0 z-40 h-full bg-white w-[250px] shadow-lg transition-transform duration-300 lg:relative lg:translate-x-0 lg:w-[200px] ${rightOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed top-0 right-0 z-40 h-full bg-white w-[250px] shadow-lg transition-transform duration-300 lg:relative lg:translate-x-0 lg:w-[250px] ${rightOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <RightSideBar />
       </div>
     </div>
