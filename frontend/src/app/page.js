@@ -21,10 +21,34 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  // Loading state
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch categories when component mounts
+  const [searchTerm, setSearchTerm] = useState(''); //// for search item
+
+  // for initial dua
+  const [initial, setInitial] = useState([]);
+
+  // fetch initial Dua
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const result = await fetch('https://dua-web-app-production.up.railway.app/duas/1', {
+        next: {
+          revalidate: 10 // revalidate after 10s
+        }
+      });
+      const data = await result.json();
+      setInitial(data);
+      setIsLoading(false);
+    }
+    fetchData();
+  }, [])
+
+
+  console.log(initial);
+
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -35,7 +59,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // Handle subcategory fetch
   const handleSubcategories = async (id) => {
     if (selectedCategoryId === id) {
       setSelectedCategoryId(null);
@@ -50,11 +73,8 @@ export default function Home() {
     setIsLoading(false);
   };
 
-  // Handle Dua Cards
   const handleDuaCards = async (id, name) => {
-    if (duaId === id) {
-      return;
-    }
+    if (duaId === id) return;
 
     setSubcatName(name);
     setIsLoading(true);
@@ -64,32 +84,37 @@ export default function Home() {
     setIsLoading(false);
   };
 
-  // Pagination logic
   const currentDuas = duas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   const totalPages = Math.ceil(duas.length / itemsPerPage);
   const pageNumbers = [...Array(totalPages)].map((_, index) => index + 1);
 
-  const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const handlePageClick = (pageNumber) => setCurrentPage(pageNumber);
+
+  // 🔍 Filtered categories based on search
+  const filteredCategories = categories.filter((category) =>
+    category.cat_name_en.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div>
       <div className='md:px-2 md:pt-5 pt-5'>
         <SectionHeader />
       </div>
+
       <div className="flex flex-col lg:flex-row justify-center gap-14 mt-4">
 
-        {/* Left Sidebar */}
+        {/* Left Section */}
         <div className="flex justify-center">
           <div className='w-[350px]'>
-            <CateAndSer />
-            <ul>
 
+            {/*  Search Component */}
+            <CateAndSer searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+            <ul>
               {isLoading ? (
-                <Loading /> // Show loading when fetching categories
+                <Loading />
               ) : (
-                categories.map((category) => (
+                filteredCategories.map((category) => (
                   <li key={category.id} className='mb-4'>
                     <div
                       className="flex gap-5 justify-between cursor-pointer items-center bg-slate-200 rounded-lg"
@@ -123,7 +148,15 @@ export default function Home() {
                                 key={subcategory.id}
                                 className="py-3 text-[16px] font-semibold text-[#373737] break-words"
                               >
-                                <div className={`inline cursor-pointer transition-colors duration-200 ${duaId === subcategory.subcat_id ? 'text-[#1FA45B]' : 'text-black'}`} onClick={() => handleDuaCards(subcategory.subcat_id, subcategory.subcat_name_en)}>
+                                <div
+                                  className={`inline cursor-pointer transition-colors duration-200 ${duaId === subcategory.subcat_id
+                                    ? 'text-[#1FA45B]'
+                                    : 'text-black'
+                                    }`}
+                                  onClick={() =>
+                                    handleDuaCards(subcategory.subcat_id, subcategory.subcat_name_en)
+                                  }
+                                >
                                   {subcategory.subcat_name_en}
                                 </div>
                               </li>
@@ -139,41 +172,57 @@ export default function Home() {
           </div>
         </div>
 
-        
+        {/* Right Section (Dua Cards) */}
         <div>
-          {/* Dua Cards */}
-          <div className='flex justify-center'>
-            {duas.length > 0 && (
-              <div className='font-semibold mb-4 flex justify-center md:text-[22px] max-w-xl'>
-                <span className='text-[#1FA45B] pr-2'>Section:</span> {subcatName}
-              </div>
-            )}
-          </div>
-
           <ul>
-            {
-              currentDuas.map((d, index) => (
-                <DuaCard key={index} dua={d} index={(currentPage - 1) * itemsPerPage + index + 1} />
+            {duas.length === 0 &&
+              initial.map((d, index) => (
+                <DuaCard
+                  key={index}
+                  dua={d}
+                  index={index + 1}
+                />
               ))
             }
           </ul>
 
-          {/* Pagination */}
-          <div className="flex justify-center mt-4">
-            <div className="flex gap-2">
-              {pageNumbers.map((number) => (
-                <button
-                  key={number}
-                  className={`px-4 py-2 ${currentPage === number ? 'bg-green-500' : 'bg-gray-500'} text-white rounded`}
-                  onClick={() => handlePageClick(number)}
-                >
-                  {number}
-                </button>
-              ))}
-            </div>
-          </div>
+          {duas.length > 0 && (
+            <>
+              <div className='font-semibold mb-4 flex justify-center md:text-[22px] max-w-xl'>
+                <span className='text-[#1FA45B] pr-2'>Section:</span> {subcatName}
+              </div>
+
+              <ul>
+                {currentDuas.map((d, index) => (
+                  <DuaCard
+                    key={index}
+                    dua={d}
+                    index={(currentPage - 1) * itemsPerPage + index + 1}
+                  />
+                ))}
+              </ul>
+
+              {/* Pagination */}
+              <div className="flex justify-center mt-4">
+                <div className="flex gap-2">
+                  {pageNumbers.map((number) => (
+                    <button
+                      key={number}
+                      className={`px-4 py-2 ${currentPage === number ? 'bg-green-500' : 'bg-gray-500'
+                        } text-white rounded`}
+                      onClick={() => handlePageClick(number)}
+                    >
+                      {number}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
+    
+    
   );
 }

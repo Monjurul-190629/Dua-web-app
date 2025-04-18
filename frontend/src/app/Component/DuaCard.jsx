@@ -8,7 +8,7 @@ import { MdShare, MdOutlineReport } from "react-icons/md";
 import { FaCirclePlay } from "react-icons/fa6";
 
 const DuaCard = ({ dua, index }) => {
-    const { dua_name_en, top_en, dua_arabic, refference_en, audio } = dua;
+    const { dua_name_en, top_en, dua_arabic, refference_en, audio, transliteration_en, translation_en } = dua;
 
 
     const audioRef = useRef(null);
@@ -36,6 +36,16 @@ const DuaCard = ({ dua, index }) => {
             <div className="mt-4">
                 <p className="mb-5 text-sm sm:text-base">{top_en}</p>
                 <p className="mb-5 font-bold text-xl sm:text-3xl text-right leading-relaxed p-5">{dua_arabic}</p>
+                {
+                    transliteration_en ? <>
+                    <p className='text-justify mb-4'><span className='font-semibold'>Transliteration: </span> <span className='italic'>{transliteration_en}</span></p>
+                    </> : ''
+                }
+                {
+                    translation_en ? <>
+                    <p><span className='font-semibold'>Translation: </span> {translation_en}</p>
+                    </> : ''
+                }
             </div>
 
             {/* Reference */}
