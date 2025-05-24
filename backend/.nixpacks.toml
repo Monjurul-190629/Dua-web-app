@@ -1,8 +1,15 @@
 [phases.setup]
-nixPkgs = ['python3', 'gcc', 'make', 'nodejs', 'pkg-config', 'sqlite']
+nixPkgs = [
+  "nodejs",          # Ensures proper node version
+  "python3",         # Required for node-gyp
+  "gcc",             # Compiler
+  "make",            # Make utility for building
+  "pkg-config",      # Helps better-sqlite3 find SQLite headers
+  "sqlite"           # Required for better-sqlite3
+]
 
 [phases.install]
-cmds = ['npm install']
+cmds = ["npm ci"]
 
 [phases.build]
-cmds = ['npm rebuild better-sqlite3 --build-from-source']
+cmds = ["npm rebuild better-sqlite3 --build-from-source"]
